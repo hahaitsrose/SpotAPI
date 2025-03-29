@@ -37,11 +37,13 @@ def random_hex_string(length: int):
     hex_string = random_bytes.hex()
     return hex_string[:length]
 
-
 def parse_json_string(b: str, s: str) -> str:
     start_index = b.find(f'{s}":"')
     if start_index == -1:
-        raise ValueError(f'Substring "{s}":" not found in JSON string')
+        """raise ValueError(f'Substring "{s}":" not found in JSON string')"""
+        if f'"{s}":' not in b:
+            print(f'Warning: "{s}" not found in JSON. Proceeding without it.')
+            return None  # or some default value
 
     value_start_index = start_index + len(s) + 3
     value_end_index = b.find('"', value_start_index)
